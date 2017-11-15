@@ -1,0 +1,81 @@
+---
+title: "Untitled"
+author: "Ahlam Abuawad"
+date: "11/13/2017"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+```{r_load_packages, include=FALSE}
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(tidytext)
+library(viridis)
+library(plotly)
+```
+
+```{r}
+nyc_inspections = read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Results.csv.gz", 
+                           col_types = cols(building = col_character()),
+                           na = c("NA", "N/A")) %>% 
+  filter(grade %in% c("A", "B", "C")) %>% 
+  mutate(inspection_num = row_number(),
+         boro = str_to_title(boro)) %>% 
+  select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, 
+  violation_description)
+
+inspection_words = nyc_inspections %>% 
+  unnest_tokens(word, violation_description)
+
+data(stop_words) #loading stop words dataset
+
+inspection_words = 
+  anti_join(inspection_words, stop_words) #to remove them is opposite of a join from these two datasets (removing any overlap)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+nyc_inspections %>% 
+  filter(str_detect(dba, regex("falafel", ignore_case = TRUE))) %>%
+  mutate(boro = fct_infreq(boro)) %>% #creating factor variable based on freq
+  ggplot(aes(x = boro, y = grade, fill = grade)) + geom_col() + labs(x = "Borough" , y = "Grade", title = "NYC Inpection Grades for Falafel Restaurants")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+inspection_words %>% 
+  filter(str_detect(dba, regex("falafel", ignore_case = TRUE))) %>%
+  count(word, sort = TRUE) %>% #look at order in which words appear
+  top_n(10) %>% #extracts top 10 rows
+  mutate(word = fct_reorder(word, n)) %>% #reorder by n, freq of appearance
+  ggplot(aes(x = word, y = n)) + 
+  geom_bar(stat = "identity", fill = "blue", alpha = .6) + 
+  coord_flip()
+```
+
+### Chart C
+
+```{r}
+nyc_inspections %>% 
+  filter(str_detect(dba, regex("mediterranean", ignore_case = TRUE))) %>%
+  mutate(boro = fct_infreq(boro)) %>% #creating factor variable based on freq
+  ggplot(aes(x = boro, fill = grade)) + geom_bar() + 
+  labs(x = "Borough", title = "Distribution of Mediterranean Restaurants in NYC")
+```
+
