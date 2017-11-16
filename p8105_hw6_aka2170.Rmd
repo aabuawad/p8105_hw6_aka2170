@@ -17,8 +17,6 @@ library(forcats)
 library(tidytext)
 library(viridis)
 library(plotly)
-library(ggridges)
-library(ggthemes)
 ```
 
 ```{r}
@@ -52,19 +50,6 @@ word_ratios = inspection_words %>%
     log_OR = log(Manhattan_odds / Brooklyn_odds)
   ) %>% #computing odds ratios
   arrange(desc(log_OR)) 
-
-bing_sentiments = get_sentiments("bing") #positive or negative sentiments
-
-inspection_sentiments = inspection_words %>% 
-  inner_join(., bing_sentiments) %>% #merge everything that overlaps with 2 datasets and keep only that
-  count(inspection_num, sentiment) %>% #counting pos and neg words in each inspection
-  spread(sentiment, n, fill = 0) %>% #spreading the data back out to get... 
-  mutate(sentiment = positive - negative) %>% #a total score
-  select(inspection_num, sentiment)
-
-inspection_sentiments = 
-  right_join(nyc_inspections, inspection_sentiments, 
-             by = "inspection_num")
 ```
 
 Column {data-width=650}
@@ -73,11 +58,14 @@ Column {data-width=650}
 ### NYC Mediterranean Restaurant Scores
 
 ```{r}
-nyc_inspections %>% 
-  filter(str_detect(dba, regex("mediterranean", ignore_case = TRUE))) %>%
-  mutate(boro = fct_infreq(boro)) %>% #creating factor variable based on freq
-  ggplot(aes(x = boro, y = score, fill = boro)) + geom_violin() + 
-  labs(x = "Borough" , y = "Score", title = "NYC Inspection Scores for Mediterranean Restaurants")
+nyc_inspections %>%
+   plot_ly(y = ~score, x = ~boro, color = ~boro, type = "box",
+          colors = "Set2") %>% 
+   layout(xaxis = list(title = "Borough",
+                      showticklabels = TRUE,
+                      tickangle = 45),
+                      margin = list(b = 48),
+          yaxis = list(title = "Inspection Score"))
 ```
 
 Column {data-width=350}
@@ -92,22 +80,27 @@ word_ratios %>%
   top_n(15, abs(log_OR)) %>% #taking top 15 freq appearing words in each groups
   ungroup() %>%
   mutate(word = fct_reorder(word, log_OR)) %>% #reordering according to log OR
-  ggplot(aes(word, log_OR, fill = pos_log_OR)) +
-  geom_col() +
-  coord_flip() +
-  ylab("log odds ratio (Manhattan/Brooklyn)") +
-  scale_fill_discrete(name = "")
+  plot_ly(x = ~word, y = ~log_OR, color = ~pos_log_OR, type = "bar") %>% 
+  layout(xaxis = list(title = "Word",
+                      showticklabels = TRUE,
+                      tickangle = 45),
+                      margin = list(b = 48),
+         yaxis = list(title = "Log of Odds Ratio"))
 ```
 
-### Sentiment Scores for Staten Island Spanish Restaurants
+### The Amount of Cuisine Types Across Staten Island Restaurants
 
 ```{r}
-inspection_sentiments %>% 
-  filter(boro == "Staten Island", 
-         cuisine_description == "Spanish") %>% 
-  ggplot(aes(x = sentiment, y = dba, color = dba)) + 
-  geom_density_ridges(aes(fill = dba), scale = 0.85) +
-  theme(legend.position = "none") +
-  labs(x = "Word Sentiment Score", y = "Restaurant Names", title = "Staten Island Inspection Review Sentiment Scores for Spanish Restaurants") 
+nyc_inspections %>% 
+  filter(boro == "Staten Island") %>% 
+  group_by(dba) %>% 
+  mutate(restaurant_sum = n()) %>% 
+  plot_ly(x = ~cuisine_description, y = ~restaurant_sum, 
+          type = "scatter") %>% 
+  layout(xaxis = list(title = "Cuisine Description",
+                      showticklabels = TRUE,
+                      tickangle = 45),
+                      margin = list(b = 48),
+        yaxis = list(title = "Number of Restuarants"))
 ```
 
