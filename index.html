@@ -11,14 +11,17 @@
 
 
 
-<title>Holy cow!</title>
+<title>Data Science I Homework Assignment 6</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
@@ -98,34 +101,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 61px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 </style>
 
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -180,16 +278,22 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">GitHub Repositories</a>
 </li>
 <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
+  <a href="p8105_hw6_aka2170.html">Dashboard</a>
+</li>
+<li>
+  <a href="https://yanellinunez.shinyapps.io/shiny_dashboard_yn2295/">Shiny Dashboard</a>
+</li>
+<li>
+  <a href="mailto:&lt;aka2170@cumc.columbia.edu&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="http://github.com/&lt;YOUR_GH_NAME&gt;/">
+  <a href="http://github.com/aabuawad/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -203,18 +307,58 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Holy cow!</h1>
+<h1 class="title toc-ignore">Data Science I Homework Assignment 6</h1>
 
 </div>
 
 
-<div id="i-have-a-webpage" class="section level3">
-<h3>I have a webpage!</h3>
-<p>And I can put all kinds of stuff on it!</p>
+<div id="nyc-restaurant-inspections-dataset" class="section level3">
+<h3>NYC Restaurant Inspections Dataset</h3>
+<p>Every year, unannounced inspections of restaurants in New York City are performed by the <a href="http://www1.nyc.gov/site/doh/index.page">New York City Department of Health and Mental Hygiene (DOHMH)</a>. Compliance to health and safety regulations for restaurant standards are measured, summed into a score, and converted into a grade that must be displayed for patrons to see. The higher the score, the lower the grade the restaurant receives.</p>
+<p><br><img src = "Images/nyc.jpg" style = "width:100%"><br> <em>Image source: Odyssey</em></p>
+<p><br></p>
+</div>
+<div id="source" class="section level2">
+<h2>Source</h2>
+<p>The publicly available dataset can be accessed from <a href="https://dev.socrata.com/foundry/data.cityofnewyork.us/9w7m-hzhe">NYC Open Data</a>. For the plots in this website, the data was retrieved in October of 2017.</p>
+</div>
+<div id="details-on-the-dataset" class="section level2">
+<h2>Details on the Dataset</h2>
+<p>There are roughly 187,000 rows and 9 columns in this dataset. The dataset contains variables on the borough, restaurant, and cuisine names, as well as the zip code, inspection description, inspection score, inspection grade, and whether the restaurant was critically flagged. Additionally, this dataset contains multiple rows per resturant, revealing multiple inspections over time, making the data longitudinal.</p>
+</div>
+<div id="cleaning-and-tidying-the-data" class="section level2">
+<h2>Cleaning and Tidying the Data</h2>
+<p>Words in the inspection description were unnested, stop words removed, and odds ratios of the top 10 words used in Brooklyn compared to Manhattan were created.</p>
+</div>
+<div id="dashboard" class="section level2">
+<h2>Dashboard</h2>
+<p>In the NYC Mediterranean Restaurant Scores boxplot, each borough have relatively similar inspection score medians. However, Brooklyn has a Mediterranean restaurant that recieved the highest score of 86, while both Manhattan and Brooklyn both received the lowest score of -1.</p>
+<p><br></p>
+<p>When comparing Brooklyn and Manhattan’s inspection descriptions, the words “living”, “sleeping”, and “gas” had the lowest odds of being found in Brooklyn inspections compared to Manhattan ones; while “served”, “ingredients”, and “receive” had the highest odds of being used in Manhattan inspections compared to Brooklyn ones.</p>
+<p><br></p>
+<p>Lastly, when comparing the number of restuarants in Staten Island, most restuarants had American style cuisines such as donuts, coffee and tea places. Surprisingly, there were not that many pizza places.</p>
+<p><br></p>
+</div>
+<div id="shiny-dashboard" class="section level2">
+<h2>Shiny Dashboard</h2>
+<p>Restaurants with “A” grades were closely clustered around scores of 10, while restaurants with “B” grades were aggregated near scores of 20. The median “C” graded restuarants were close to scores of 30. Restaurant scores should correspond to the grades given during inspections, which would mean that restuarants with low scores should be expected to recieve the highest grade. However, across all the boroughs, even low scoring restuarants recieved C grades, with the lowest being scores of 0. This might reflect other factors involved that do not effect the scoring, but the final grading of restaurants.</p>
+<p>When looking at the amount of restaurants with certain cuisines across all boroughs, although each borough had a large variety of cuisine options, the most common was always American cuisine. Surprisingly, of the restuarants inspected in each borough, the Bronx had the largest variety of cuisines rnaging from African to Thai.</p>
+<p><br></p>
+<div id="collaborators-and-contact-information" class="section level4">
+<h4>Collaborators and Contact Information</h4>
+<p><em>I collaborated with Yanelli Nunez (UNI: yn2295) on creating the shiny flexdashboard featured on this website.</em> <br> <em>Lizzy Gibson (UNI: eag2186) and I collaborated to create a <a href="https://aabuawad.shinyapps.io/lizzy_shiny/">shiny flexdashboard for her analysis</a> of the <a href="https://www.nodc.noaa.gov/archivesearch/catalog/search/resource/details.page?uuid=gov.noaa.ncdc:C00861">New York State National Oceanic and Atmospheric Administration (NYSNOAA) dataset</a>.</em></p>
+<p>Ahlam Abuawad <a href="https://www.mailman.columbia.edu/become-student/departments/environmental-health-sciences-ehs">Department of Environmental Health Sciences</a><br />
+<a href="http://www.mailman.columbia.edu/">Columbia Mailman School of Public Health</a><br />
+722 West 168th Street<br />
+New York, New York 10032</p>
+<p>Email: <a href="mailto:aka2170@cumc.columbia.edu">aka2170@cumc.columbia.edu</a></p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 

@@ -1,7 +1,66 @@
 ---
-title: "Holy cow!"
+title: "Data Science I Homework Assignment 6"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    cold_folding: hide
 ---
 
-### I have a webpage!
+### NYC Restaurant Inspections Dataset
 
-And I can put all kinds of stuff on it!
+Every year, unannounced inspections of restaurants in New York City are performed by the [New York City Department of Health and Mental Hygiene (DOHMH)](http://www1.nyc.gov/site/doh/index.page). Compliance to health and safety regulations for restaurant standards are measured, summed into a score, and converted into a grade that must be displayed for patrons to see. The higher the score, the lower the grade the restaurant receives. 
+
+<br><img src = "Images/nyc.jpg" style = "width:100%"><br>
+*Image source: Odyssey*
+
+<br>
+
+
+## Source
+
+The publicly available dataset can be accessed from [NYC Open Data](https://dev.socrata.com/foundry/data.cityofnewyork.us/9w7m-hzhe). For the plots in this website, the data was retrieved in October of 2017.
+
+## Details on the Dataset
+
+There are roughly 187,000 rows and 9 columns in this dataset. The dataset contains variables on the borough, restaurant, and cuisine names, as well as the zip code, inspection description, inspection score, inspection grade, and whether the restaurant was critically flagged. Additionally, this dataset contains multiple rows per resturant, revealing multiple inspections over time, making the data longitudinal. 
+
+## Cleaning and Tidying the Data
+
+Words in the inspection description were unnested, stop words removed, and odds ratios of the top 10 words used in Brooklyn compared to Manhattan were created. 
+
+## Dashboard
+
+In the NYC Mediterranean Restaurant Scores boxplot, each borough have relatively similar inspection score medians. However, Brooklyn has a Mediterranean restaurant that recieved the highest score of 86, while both Manhattan and Brooklyn both received the lowest score of -1.
+
+<br>
+
+When comparing Brooklyn and Manhattan's inspection descriptions, the words "living", "sleeping", and "gas" had the lowest odds of being found in Brooklyn inspections compared to Manhattan ones; while "served", "ingredients", and "receive" had the highest odds of being used in Manhattan inspections compared to Brooklyn ones.
+
+<br>
+
+Lastly, when comparing the number of restuarants in Staten Island, most restuarants had American style cuisines such as donuts, coffee and tea places. Surprisingly, there were not that many pizza places. 
+
+<br>
+
+## Shiny Dashboard
+
+Restaurants with "A" grades were closely clustered around scores of 10, while restaurants with "B" grades were aggregated near scores of 20. The median "C" graded restuarants were close to scores of 30. Restaurant scores should correspond to the grades given during inspections, which would mean that restuarants with low scores should be expected to recieve the highest grade. However, across all the boroughs, even low scoring restuarants recieved C grades, with the lowest being scores of 0. This might reflect other factors involved that do not effect the scoring, but the final grading of restaurants. 
+
+When looking at the amount of restaurants with certain cuisines across all boroughs, although each borough had a large variety of cuisine options, the most common was always American cuisine. Surprisingly, of the restuarants inspected in each borough, the Bronx had the largest variety of cuisines rnaging from African to Thai.
+
+<br>
+
+#### Collaborators and Contact Information
+
+*I collaborated with Yanelli Nunez (UNI: yn2295) on creating the shiny flexdashboard featured on this website.* 
+<br>
+*Lizzy Gibson (UNI: eag2186) and I collaborated to create a [shiny flexdashboard for her analysis](https://aabuawad.shinyapps.io/lizzy_shiny/) of the [New York State National Oceanic and Atmospheric Administration (NYSNOAA) dataset](https://www.nodc.noaa.gov/archivesearch/catalog/search/resource/details.page?uuid=gov.noaa.ncdc:C00861).*
+
+Ahlam Abuawad
+[Department of Environmental Health Sciences](https://www.mailman.columbia.edu/become-student/departments/environmental-health-sciences-ehs)  
+[Columbia Mailman School of Public Health](http://www.mailman.columbia.edu/)  
+722 West 168th Street  
+New York, New York 10032  
+
+Email: [aka2170@cumc.columbia.edu](mailto:aka2170@cumc.columbia.edu) 

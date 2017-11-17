@@ -1,9 +1,13 @@
 ---
-title: "About"
+title: "GitHub Repositories"
+output:
+  html_document
 ---
 
-### About this site
+### Flexdashboard
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+The GitHub repository for the flexdashboard can be accessed [here](https://github.com/aabuawad/p8105_hw6_aka2170). 
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+### Shiny Flexdashboard
+
+The GitHub repository for the shiny application can be accessed [here](https://github.com/yanellinu/p8105_hw6_yn2295_shiny_collaboration).

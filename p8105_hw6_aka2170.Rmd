@@ -1,7 +1,6 @@
 ---
-title: "Homework 6"
+title: "NYC Restuarant Inspections"
 author: "Ahlam Abuawad"
-date: "11/13/2017"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -24,6 +23,7 @@ nyc_inspections = read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Res
                            col_types = cols(building = col_character()),
                            na = c("NA", "N/A")) %>% 
   filter(grade %in% c("A", "B", "C")) %>% 
+  na.omit() %>% 
   mutate(inspection_num = row_number(),
          boro = str_to_title(boro)) %>% 
   select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, 
